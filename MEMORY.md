@@ -1,0 +1,1 @@
+- README rewrite by Claude — full project documentation updated

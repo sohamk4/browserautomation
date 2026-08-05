@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Turbo cache
+.turbo/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+ms-playwright/
+
+# Prisma
+packages/db/prisma/*.db
+packages/db/prisma/*.db-journal
+packages/db/prisma/generated/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Misc
+*.tmp
+*.temp
+*.bak
+*.cache
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency lock files – commit these, so keep them (not ignored)
+# But pnpm-lock.yaml should be committed, so we keep it.
+
+# Sometimes generated files from NestJS
+apps/api/**/*.d.ts
+apps/api/**/*.js
+apps/api/**/*.js.map
+!apps/api/**/*.d.ts
+apps/api/linkedin_state.json

@@ -1,0 +1,17 @@
+{
+  "name": "ai-browser-automation",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "prettier --write .",
+    "build:recorder": "esbuild src/inject-scripts/recorder-init.ts --bundle --platform=browser --outfile=apps/api/src/modules/browser/recorder/recorder-init.js --format=iife"
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Workflow {
+  id          String             @id @default(uuid())
+  name        String
+  description String?
+  status      WorkflowStatus     @default(DRAFT)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  sessions    RecordingSession[]
+  steps       Step[]
+  variables   Variable[]
+
+  @@index([status])
+}
+
+model Variable {
+  id           String       @id @default(uuid())
+  name         String
+  exampleValue String?
+  type         VariableType
+  description  String?
+  workflowId   String
+  createdAt    DateTime     @default(now())
+  workflow     Workflow     @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+}
+
+model Step {
+  id               String     @id @default(uuid())
+  order            Int
+  action           ActionType
+  payload          Json?
+  selectors        Json?
+  url              String?
+  title            String?
+  tabId            String?
+  timestamp        DateTime?
+  screenshotBefore String?
+  screenshotAfter  String?
+  workflowId       String
+  createdAt        DateTime   @default(now())
+  workflow         Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+}
+
+model RecordingSession {
+  id         String    @id @default(uuid())
+  startedAt  DateTime  @default(now())
+  endedAt    DateTime?
+  workflowId String?
+  workflow   Workflow? @relation(fields: [workflowId], references: [id])
+
+  @@index([workflowId])
+}
+
+enum ActionType {
+  CLICK
+  DBLCLICK
+  RIGHTCLICK
+  KEYDOWN
+  KEYUP
+  TYPE
+  SCROLL
+  HOVER
+  DRAG
+  DROP
+  UPLOAD
+  DOWNLOAD
+  SELECT
+  CHECK
+  UNCHECK
+  NAVIGATE
+  BACK
+  FORWARD
+  REFRESH
+  NEWTAB
+  CLOSETAB
+  SWITCHTAB
+  WAIT
+  SCREENSHOT
+  COPY
+  EXTRACT
+  LOOP
+}
+
+enum VariableType {
+  EMAIL
+  PASSWORD
+  SEARCH
+  TEXT
+  NUMBER
+  URL
+}
+
+enum WorkflowStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

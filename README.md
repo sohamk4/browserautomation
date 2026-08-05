@@ -191,8 +191,6 @@ POST /replay/:workflowId
 
 - **Node.js 22** (or compatible)
 - **pnpm 8.15.0+** (`corepack` recommended)
-- **Docker** (for Postgres, if not using the provided Supabase instance)
-- **Redis** (only needed when the BullMQ queue is enabled)
 - **Brave Browser** installed at `C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe`
   (the `BrowserService` launches Chromium via Brave's executable path; see [Dev Note](#browser-executable-path-windows))
 
@@ -293,18 +291,6 @@ The API runs a Socket.IO gateway on `ws://localhost:3000`.
 | `status` | `'recording' \| 'paused' \| 'stopped'` | Broadcast when recording status changes |
 | `error` | string or `{ message: string }` | Error notifications |
 
-### Background Queue (BullMQ)
-
-The project includes an **opt-in** BullMQ queue for background workflow processing
-(AI-driven selector repair, validation, replay — future features). It is **disabled
-by default** so the app boots without Redis.
-
-To enable:
-
-```bash
-export BULLMQ_ENABLED=true
-export REDIS_URL=redis://localhost:6379   # optional, has a default
-```
 
 When enabled, `POST /recorder/stop` enqueues a `process` job for the saved workflow.
 The `WorkflowProcessor` (currently a stub that logs) handles it.
